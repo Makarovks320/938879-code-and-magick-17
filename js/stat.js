@@ -27,6 +27,10 @@ var getMaxElement = function (arr) {
   return maxElement;
 };
 
+function getRandom(max, min) {
+  return Math.random() * (max - min) + min;
+}
+
 window.renderStatistics = function (ctx, players, times) {
   renderCloud(ctx, CLOUD_X + GAP, CLOUD_Y + GAP, 'rgba(0, 0, 0, 0.7)');
   renderCloud(ctx, CLOUD_X, CLOUD_Y, '#fff');
@@ -39,20 +43,19 @@ window.renderStatistics = function (ctx, players, times) {
   var maxTime = getMaxElement(times);
 
   for (var i = 0; i < players.length; i++) {
-
-    ctx.fillText(players[i], CLOUD_X + (CLOUD_WIDTH - (COL_WIDTH + SPACE_BETWEEN) * players.length + SPACE_BETWEEN) / 2
-        + (COL_WIDTH + SPACE_BETWEEN) * i, CLOUD_Y + CLOUD_HEIGHT - FONT_GAP);
-    ctx.fillText(Math.round(times[i]), CLOUD_X + (CLOUD_WIDTH - (COL_WIDTH + SPACE_BETWEEN) * players.length + SPACE_BETWEEN) / 2
-        + (COL_WIDTH + SPACE_BETWEEN) * i, CLOUD_Y + CLOUD_HEIGHT - GAP * 2 - FONT_GAP - (COL_HEIGHT * times[i]) / maxTime);
+    var chartCoordinateX = CLOUD_X + INDENT + (COL_WIDTH + SPACE_BETWEEN) * i;
+    var chartCoordinateY = CLOUD_Y + CLOUD_HEIGHT - FONT_GAP;
+    ctx.fillText(players[i], chartCoordinateX, chartCoordinateY);
+    ctx.fillText(Math.round(times[i]), chartCoordinateX, chartCoordinateY - GAP * 2 - (COL_HEIGHT * times[i]) / maxTime);
   }
 
   for (i = 0; i < players.length; i++) {
     if (players[i] === 'Вы') {
       ctx.fillStyle = 'rgba(255, 0, 0, 1)';
     } else {
-      ctx.fillStyle = 'rgba(0, 0, 139, ' + Math.random() + ')';
+      ctx.fillStyle = 'rgba(0, 0, 139, ' + getRandom(0.1, 1) + ')';
     }
-    ctx.fillRect(CLOUD_X + (CLOUD_WIDTH - (COL_WIDTH + SPACE_BETWEEN) * players.length + SPACE_BETWEEN) / 2
-        + (COL_WIDTH + SPACE_BETWEEN) * i, CLOUD_Y + CLOUD_HEIGHT - FONT_GAP * 2, COL_WIDTH, -(COL_HEIGHT * times[i]) / maxTime);
+    ctx.fillRect(CLOUD_X + INDENT + (COL_WIDTH + SPACE_BETWEEN) * i, chartCoordinateY - FONT_GAP,
+        COL_WIDTH, -(COL_HEIGHT * times[i]) / maxTime);
   }
 };
