@@ -35,16 +35,14 @@ var EYES_COLORS = [
   'yellow',
   'green'
 ];
-var wizards = [];
-var wizardElements = [];
 
 document.querySelector('.setup').classList.remove('hidden');
 
-getRandomWizards(wizards, 4); // генерирует массив из волшебников
+var wizards = getRandomWizards(4); // генерирует массив из волшебников
 
-createWizardElements(wizards); // создает DOM-элементы с данными случайно сгенерированных волшебников
+var wizardElements = createWizardElements(wizards); // создает DOM-элементы с данными случайно сгенерированных волшебников
 
-displayWizards(wizards); // показывает их в блоке .setup-similar-list
+displayWizards(wizardElements); // показывает их в блоке .setup-similar-list
 
 document.querySelector('.setup-similar').classList.remove('hidden');
 
@@ -54,28 +52,31 @@ function getRandomInteger(max, min) {
   }
   return Math.round(Math.random() * (max - min) + min);
 }
-function getRandomWizards(arrayName, wizardsNumber) {
-  for (var i = 0; i < wizardsNumber; i++) {
+function getRandomWizards(wizardsCount) {
+  var localWizards = [];
+  for (var i = 0; i < wizardsCount; i++) {
     var wizard = {};
     wizard.name = NAMES[getRandomInteger(NAMES.length - 1)] + ' ' + SURNAMES[getRandomInteger(SURNAMES.length - 1)];
     wizard.coatColor = COAT_COLORS[getRandomInteger(COAT_COLORS.length - 1)];
     wizard.eyesColor = EYES_COLORS[getRandomInteger(EYES_COLORS.length - 1)];
-    arrayName[i] = wizard;
+    localWizards[i] = wizard;
   }
-  return arrayName;
+  return localWizards;
 }
 function createWizardElements(someArray) {
+  var localWizardElements = [];
   var template = document.querySelector('#similar-wizard-template');
   for (var i = 0; i < someArray.length; i++) {
     var wizardElement = template.content.querySelector('.setup-similar-item').cloneNode(true);
     wizardElement.querySelector('.setup-similar-label').textContent = someArray[i].name;
     wizardElement.querySelector('.wizard-coat').style.fill = someArray[i].coatColor;
     wizardElement.querySelector('.wizard-eyes').style.fill = someArray[i].eyesColor;
-    wizardElements[i] = wizardElement;
+    localWizardElements[i] = wizardElement;
   }
+  return localWizardElements;
 }
-function displayWizards(someArray) {
-  for (var i = 0; i < someArray.length; i++) {
-    document.querySelector('.setup-similar-list').appendChild(wizardElements[i]);
+function displayWizards(localWizardElements) {
+  for (var i = 0; i < localWizardElements.length; i++) {
+    document.querySelector('.setup-similar-list').appendChild(localWizardElements[i]);
   }
 }
