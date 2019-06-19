@@ -35,7 +35,8 @@ var EYES_COLORS = [
   'yellow',
   'green'
 ];
-var template = document.querySelector('#similar-wizard-template');
+var template = document.querySelector('#similar-wizard-template')
+.content.querySelector('.setup-similar-item');
 var listNode = document.querySelector('.setup-similar-list');
 
 document.querySelector('.setup').classList.remove('hidden');
@@ -64,7 +65,7 @@ function getRandomWizards(wizardsCount) {
 }
 
 function createWizardElement(wizard) {
-  var wizardElement = template.content.querySelector('.setup-similar-item').cloneNode(true);
+  var wizardElement = template.cloneNode(true);
   wizardElement.querySelector('.setup-similar-label').textContent = wizard.name;
   wizardElement.querySelector('.wizard-coat').style.fill = wizard.coatColor;
   wizardElement.querySelector('.wizard-eyes').style.fill = wizard.eyesColor;
