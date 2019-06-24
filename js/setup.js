@@ -35,10 +35,17 @@ var EYES_COLORS = [
   'yellow',
   'green'
 ];
+var FIREBALL_COLORS = [
+  '#ee4830',
+  '#30a8ee',
+  '#5ce6c0',
+  '#e848d5',
+  '#e6e848'
+];
 var template = document.querySelector('#similar-wizard-template');
 var listNode = document.querySelector('.setup-similar-list');
 
-document.querySelector('.setup').classList.remove('hidden');
+
 var wizards = getRandomWizards(4); // генерирует массив из волшебников
 displayWizards(wizards); // показывает их в блоке .setup-similar-list
 document.querySelector('.setup-similar').classList.remove('hidden');
@@ -76,3 +83,62 @@ function displayWizards(localWizards) {
     listNode.appendChild(createWizardElement(wizardItem));
   });
 }
+
+var ESC_KEYCODE = 27;
+var ENTER_KEYCODE = 13;
+
+var setup = document.querySelector('.setup');
+var setupOpen = document.querySelector('.setup-open');
+var setupClose = setup.querySelector('.setup-close');
+var setupUserName = setup.querySelector('.setup-user-name');
+var setupWizardCoat = setup.querySelector('.setup-wizard .wizard-coat');
+var setupWizardEyes = setup.querySelector('.setup-wizard .wizard-eyes');
+var setupWizardFireball = setup.querySelector('.setup-fireball-wrap');
+
+var onPopupEscPress = function (evt) {
+  if (evt.keyCode === ESC_KEYCODE && document.activeElement !== setupUserName) {
+    closePopup();
+  }
+};
+
+var openPopup = function () {
+  setup.classList.remove('hidden');
+  document.addEventListener('keydown', onPopupEscPress);
+};
+
+var closePopup = function () {
+  setup.classList.add('hidden');
+  document.removeEventListener('keydown', onPopupEscPress);
+};
+
+setupOpen.addEventListener('click', function () {
+  openPopup();
+});
+
+setupOpen.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    openPopup();
+  }
+});
+
+setupClose.addEventListener('click', function () {
+  closePopup();
+});
+
+setupClose.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    closePopup();
+  }
+});
+
+setupWizardCoat.addEventListener('click', function () {
+  setupWizardCoat.style.fill = COAT_COLORS[getRandomInteger(COAT_COLORS.length - 1)];
+});
+
+setupWizardEyes.addEventListener('click', function () {
+  setupWizardEyes.style.fill = EYES_COLORS[getRandomInteger(EYES_COLORS.length - 1)];
+});
+
+setupWizardFireball.addEventListener('click', function () {
+  setupWizardFireball.style.background = FIREBALL_COLORS[getRandomInteger(FIREBALL_COLORS.length - 1)];
+});
