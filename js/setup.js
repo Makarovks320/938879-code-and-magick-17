@@ -95,6 +95,11 @@ var setupWizardCoat = setup.querySelector('.setup-wizard .wizard-coat');
 var setupWizardEyes = setup.querySelector('.setup-wizard .wizard-eyes');
 var setupWizardFireball = setup.querySelector('.setup-fireball-wrap');
 
+var setupStartPosition = {
+  top: setup.style.top,
+  left: setup.style.left
+};
+
 var onPopupEscPress = function (evt) {
   if (evt.keyCode === ESC_KEYCODE && document.activeElement !== setupUserName) {
     closePopup();
@@ -107,6 +112,8 @@ var openPopup = function () {
 };
 
 var closePopup = function () {
+  setup.style.top = setupStartPosition.top;
+  setup.style.left = setupStartPosition.left;
   setup.classList.add('hidden');
   document.removeEventListener('keydown', onPopupEscPress);
 };
