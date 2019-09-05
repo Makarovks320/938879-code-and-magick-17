@@ -12,12 +12,12 @@
   var SPACE_BETWEEN = 50;
 
 
-  var renderCloud = function (ctx, x, y, color) {
+  function renderCloud(ctx, x, y, color) {
     ctx.fillStyle = color;
     ctx.fillRect(x, y, CLOUD_WIDTH, CLOUD_HEIGHT);
-  };
+  }
 
-  var getMaxElement = function (arr) {
+  function getMaxElement(arr) {
     var maxElement = arr[0];
     for (var i = 0; i < arr.length; i++) {
       if (arr[i] > maxElement) {
@@ -25,7 +25,7 @@
       }
     }
     return maxElement;
-  };
+  }
 
   function getRandom(max, min) {
     return Math.random() * (max - min) + min;
